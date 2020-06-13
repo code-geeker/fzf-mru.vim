@@ -142,7 +142,20 @@ endf
 
 function! fzf_mru#mrufiles#source()
   " remove current file from the list
-  return filter(copy(fzf_mru#mrufiles#list()), 'v:val != expand("%")')
+  " return filter(copy(fzf_mru#mrufiles#list()), 'v:val != expand("%")')
+  let l:candidates = filter(copy(fzf_mru#mrufiles#list()), 'v:val != expand("%")')
+  return s:prepend_icon(l:candidates)
+endfunction
+
+function! s:prepend_icon(candidates)
+  let l:result = []
+  for l:candidate in a:candidates
+    let l:filename = fnamemodify(l:candidate, ':p:t')
+    let l:icon = WebDevIconsGetFileTypeSymbol(l:filename, isdirectory(l:filename))
+    call add(l:result, printf('%s %s', l:icon, l:candidate))
+  endfor
+
+  return l:result
 endfunction
 
 fu! fzf_mru#mrufiles#init()

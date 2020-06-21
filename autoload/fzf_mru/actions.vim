@@ -14,7 +14,7 @@ function! fzf_mru#actions#params(params)
 endfunction
 
 function! fzf_mru#actions#options() abort
-  let options = '--prompt "MRU>"   --preview "bat --color=always --style=numbers,changes --color always {2..-1} | head -200" --expect=ctrl-v,ctrl-x'
+  let options = '--prompt "MRU>"   --preview "bat --color=always --style=numbers,changes --color always {2..-1}" --expect=ctrl-v,ctrl-x'
   if !empty(get(g:, 'fzf_mru_no_sort', 0))
     let options .= '--no-sort '
   endif
